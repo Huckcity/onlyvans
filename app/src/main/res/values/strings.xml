@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">OnlyVans</string>
+    <string name="hint_title">Item Title</string>
+    <string name="button_addItem">Add</string>
+    <string name="hint_description">Description</string>
+    <string name="vanThumbnail">Van Thumbnail</string>
+    <string name="menu_cancelAddVan">Cancel</string>
+    <string name="vanAdd">Add</string>
 </resources>
