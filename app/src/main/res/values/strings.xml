@@ -11,4 +11,26 @@
     <string name="button_addImage">Choose Image</string>
     <string name="change_image">Choose New Image</string>
     <string name="select_van_image">Select Image</string>
+
+    <string-array name="colors_array">
+        <item>Red</item>
+        <item>Green</item>
+        <item>Blue</item>
+        <item>Black</item>
+        <item>White</item>
+    </string-array>
+
+    <string-array name="engines_array">
+        <item>1.4</item>
+        <item>1.5</item>
+        <item>1.6</item>
+        <item>1.8</item>
+        <item>1.9</item>
+        <item>2.0</item>
+        <item>2.2</item>
+        <item>2.4</item>
+        <item>2.6</item>
+        <item>3.0</item>
+    </string-array>
+
 </resources>

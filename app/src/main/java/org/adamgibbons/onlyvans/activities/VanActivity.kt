@@ -2,16 +2,15 @@ package org.adamgibbons.onlyvans.activities
 
 import android.content.Intent
 import android.graphics.BitmapFactory
-import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.ArrayAdapter
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
-import com.squareup.picasso.Picasso
 import org.adamgibbons.onlyvans.MainApp
 import org.adamgibbons.onlyvans.R
 import org.adamgibbons.onlyvans.databinding.ActivityVanBinding
@@ -20,6 +19,8 @@ import org.adamgibbons.onlyvans.helpers.encodeImage
 import org.adamgibbons.onlyvans.helpers.showImagePicker
 import org.adamgibbons.onlyvans.models.VanModel
 import java.io.InputStream
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class VanActivity : AppCompatActivity() {
@@ -39,6 +40,40 @@ class VanActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbarAdd)
         app = application as MainApp
 
+        val colorPickerAdapter = ArrayAdapter.createFromResource(
+            this,
+            R.array.colors_array,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            binding.colorPicker.adapter = adapter
+        }
+
+        val enginePickerAdapter = ArrayAdapter.createFromResource(
+            this,
+            R.array.engines_array,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            binding.enginePicker.adapter = adapter
+        }
+
+        val years = ArrayList<String>()
+        val thisYear: Int = Calendar.getInstance().get(Calendar.YEAR)
+        for (i in 1900..thisYear) {
+            years.add(i.toString())
+        }
+
+        val yearPickerAdapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_item,
+            years
+        ).also {
+            adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_item)
+            binding.yearPicker.adapter = adapter
+        }
+
         if (intent.hasExtra("van_edit")) {
             edit = true
             van = intent.extras?.getParcelable("van_edit")!!
@@ -47,6 +82,9 @@ class VanActivity : AppCompatActivity() {
             binding.btnAdd.setText(R.string.update_van)
             binding.chooseImage.setText(R.string.change_image)
             binding.vanImage.setImageBitmap(decodeImage(van.image64))
+            binding.colorPicker.setSelection(colorPickerAdapter.getPosition(van.color))
+            binding.enginePicker.setSelection(enginePickerAdapter.getPosition(van.engine.toString()))
+            binding.yearPicker.setSelection(yearPickerAdapter.getPosition(van.year.toString()))
         }
 
         registerImagePickerCallback()
@@ -55,6 +93,10 @@ class VanActivity : AppCompatActivity() {
     fun addVan(view: View) {
         van.title = binding.vanTitle.text.toString()
         van.description = binding.vanDescription.text.toString()
+        van.color = binding.colorPicker.selectedItem.toString()
+        van.engine = binding.enginePicker.selectedItem.toString().toDouble()
+        van.year = binding.yearPicker.selectedItem.toString().toInt()
+
         if (van.title.isEmpty()) {
             Snackbar.make(view, "You must enter a title", Snackbar.LENGTH_LONG).show()
         } else {

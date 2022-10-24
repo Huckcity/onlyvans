@@ -27,6 +27,9 @@ class VanMemStore : VanStore {
             existingVan.title = van.title
             existingVan.description = van.description
             existingVan.image64 = van.image64
+            existingVan.color = van.color
+            existingVan.engine = van.engine
+            existingVan.year = van.year
         }
     }
 
