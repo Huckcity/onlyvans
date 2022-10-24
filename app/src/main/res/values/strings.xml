@@ -6,4 +6,5 @@
     <string name="vanThumbnail">Van Thumbnail</string>
     <string name="menu_cancelAddVan">Cancel</string>
     <string name="vanAdd">Add</string>
+    <string name="update_van">Update Van</string>
 </resources>

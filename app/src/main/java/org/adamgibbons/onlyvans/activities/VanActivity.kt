@@ -1,5 +1,6 @@
 package org.adamgibbons.onlyvans.activities
 
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -15,9 +16,9 @@ import org.adamgibbons.onlyvans.models.VanModel
 class VanActivity : AppCompatActivity() {
 
     private var van = VanModel()
-    private val vans = VanMemStore()
     private lateinit var binding: ActivityVanBinding
     lateinit var app: MainApp
+    var edit = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +29,20 @@ class VanActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbarAdd)
         app = application as MainApp
 
+        if (intent.hasExtra("van_edit")) {
+            edit = true
+            van = intent.extras?.getParcelable("van_edit")!!
+            binding.vanTitle.setText(van.title)
+            binding.vanDescription.setText(van.description)
+            binding.btnAdd.setText(R.string.update_van)
+//            Picasso.get()
+//                .load(placemark.image)
+//                .into(binding.placemarkImage)
+//            if (placemark.image != Uri.EMPTY) {
+//                binding.chooseImage.setText(R.string.change_placemark_image)
+//            }
+        }
+
     }
 
     fun addVan(view: View) {
@@ -36,7 +51,11 @@ class VanActivity : AppCompatActivity() {
         if (van.title.isEmpty()) {
             Snackbar.make(view, "You must enter a title", Snackbar.LENGTH_LONG).show()
         } else {
-            app.vans.create(van.copy())
+            if (edit) {
+                app.vans.update(van.copy())
+            } else {
+                app.vans.create(van.copy())
+            }
             setResult(RESULT_OK)
             finish()
         }
