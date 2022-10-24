@@ -3,7 +3,9 @@ package org.adamgibbons.onlyvans.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import org.adamgibbons.onlyvans.databinding.CardVanBinding
+import org.adamgibbons.onlyvans.helpers.decodeImage
 import org.adamgibbons.onlyvans.models.VanModel
 
 interface VanListener {
@@ -36,6 +38,7 @@ class VanAdapter constructor(private var vans: ArrayList<VanModel>,
         fun bind(van: VanModel, listener: VanListener) {
             binding.vanTitle.text = van.title
             binding.vanDescription.text = van.description
+            binding.imageIcon.setImageBitmap(decodeImage(van.image64))
             binding.root.setOnClickListener { listener.onVanClick(van) }
         }
     }

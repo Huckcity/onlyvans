@@ -7,5 +7,7 @@ import kotlinx.parcelize.Parcelize
 data class VanModel (
     var id: String = "",
     var title: String = "",
-    var description: String = ""
-        ) : Parcelable
+    var description: String = "",
+    var image64: String = ""
+) : Parcelable {
+}

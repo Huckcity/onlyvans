@@ -1,24 +1,34 @@
 package org.adamgibbons.onlyvans.activities
 
+import android.content.Intent
+import android.graphics.BitmapFactory
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
+import com.squareup.picasso.Picasso
 import org.adamgibbons.onlyvans.MainApp
 import org.adamgibbons.onlyvans.R
 import org.adamgibbons.onlyvans.databinding.ActivityVanBinding
-import org.adamgibbons.onlyvans.models.VanMemStore
+import org.adamgibbons.onlyvans.helpers.decodeImage
+import org.adamgibbons.onlyvans.helpers.encodeImage
+import org.adamgibbons.onlyvans.helpers.showImagePicker
 import org.adamgibbons.onlyvans.models.VanModel
+import java.io.InputStream
+
 
 class VanActivity : AppCompatActivity() {
 
     private var van = VanModel()
     private lateinit var binding: ActivityVanBinding
-    lateinit var app: MainApp
-    var edit = false
+    private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
+    private lateinit var app: MainApp
+    private var edit = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,14 +45,11 @@ class VanActivity : AppCompatActivity() {
             binding.vanTitle.setText(van.title)
             binding.vanDescription.setText(van.description)
             binding.btnAdd.setText(R.string.update_van)
-//            Picasso.get()
-//                .load(placemark.image)
-//                .into(binding.placemarkImage)
-//            if (placemark.image != Uri.EMPTY) {
-//                binding.chooseImage.setText(R.string.change_placemark_image)
-//            }
+            binding.chooseImage.setText(R.string.change_image)
+            binding.vanImage.setImageBitmap(decodeImage(van.image64))
         }
 
+        registerImagePickerCallback()
     }
 
     fun addVan(view: View) {
@@ -61,6 +68,10 @@ class VanActivity : AppCompatActivity() {
         }
     }
 
+    fun addVanImage(view: View) {
+        showImagePicker(imageIntentLauncher)
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_van_add, menu)
         return super.onCreateOptionsMenu(menu)
@@ -73,5 +84,30 @@ class VanActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun registerImagePickerCallback() {
+        imageIntentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+            { result ->
+                when(result.resultCode){
+                    RESULT_OK -> {
+                        if (result.data != null) {
+                            val imageStream: InputStream? =
+                                contentResolver.openInputStream(result.data!!.data!!)
+                            val selectedImage = BitmapFactory.decodeStream(imageStream)
+                            val encodedImage: String? = encodeImage(selectedImage)
+
+                            binding.vanImage.setImageBitmap(selectedImage)
+                            binding.chooseImage.setText(R.string.change_image)
+                            println(encodedImage)
+                            if (encodedImage != null) {
+                                van.image64 = encodedImage
+                            }
+                        } // end of if
+                    }
+                    RESULT_CANCELED -> { } else -> { }
+                }
+            }
     }
 }

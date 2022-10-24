@@ -49,6 +49,7 @@ class VanJSONStore(private val context: Context) : VanStore {
         if (existingVan != null) {
             existingVan.title = van.title
             existingVan.description = van.description
+            existingVan.image64 = van.image64
         }
         serialize()
     }

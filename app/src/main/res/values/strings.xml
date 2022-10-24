@@ -7,4 +7,8 @@
     <string name="menu_cancelAddVan">Cancel</string>
     <string name="vanAdd">Add</string>
     <string name="update_van">Update Van</string>
+    <string name="currently_selected_image">Currently Selected Image</string>
+    <string name="button_addImage">Choose Image</string>
+    <string name="change_image">Choose New Image</string>
+    <string name="select_van_image">Select Image</string>
 </resources>
