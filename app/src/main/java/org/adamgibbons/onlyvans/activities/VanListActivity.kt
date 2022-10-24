@@ -7,30 +7,47 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import org.adamgibbons.onlyvans.MainApp
 import org.adamgibbons.onlyvans.R
 import org.adamgibbons.onlyvans.adapters.VanAdapter
 import org.adamgibbons.onlyvans.adapters.VanListener
 import org.adamgibbons.onlyvans.databinding.ActivityVanListBinding
+import org.adamgibbons.onlyvans.helpers.SwipeToDeleteCallback
 import org.adamgibbons.onlyvans.models.VanModel
 
 class VanListActivity : AppCompatActivity(), VanListener {
 
-    lateinit var app: MainApp
+    private lateinit var app: MainApp
     private lateinit var binding: ActivityVanListBinding
     private lateinit var refreshIntentLauncher : ActivityResultLauncher<Intent>
+    private lateinit var vanList: List<VanModel>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        app = application as MainApp
+
         binding = ActivityVanListBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.toolbarAdd.title = title
         setSupportActionBar(binding.toolbarAdd)
-        app = application as MainApp
-        val layoutManager = LinearLayoutManager(this)
-        binding.recyclerView.layoutManager = layoutManager
-        binding.recyclerView.adapter = VanAdapter(app.vans.findAll(), this)
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        vanList = app.vans.findAll()
+        loadVans()
+
+        val swipeHandler = object : SwipeToDeleteCallback(this) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val adapter = binding.recyclerView.adapter as VanAdapter
+                val van = vanList[viewHolder.adapterPosition]
+                adapter.removeAt(viewHolder.adapterPosition)
+                app.vans.delete(van)
+            }
+        }
+
+        val itemTouchHelper = ItemTouchHelper(swipeHandler)
+        itemTouchHelper.attachToRecyclerView(binding.recyclerView)
 
         registerRefreshCallback()
     }
@@ -59,7 +76,16 @@ class VanListActivity : AppCompatActivity(), VanListener {
     private fun registerRefreshCallback() {
         refreshIntentLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult())
-            { binding.recyclerView.adapter?.notifyDataSetChanged() }
+            { loadVans() }
+    }
+
+    private fun loadVans() {
+        showVans()
+    }
+
+    private fun showVans() {
+        binding.recyclerView.adapter = VanAdapter(app.vans.findAll() as ArrayList<VanModel>, this)
+        binding.recyclerView.adapter?.notifyDataSetChanged()
     }
 
 }
