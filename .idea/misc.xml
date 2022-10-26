@@ -5,12 +5,16 @@
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.1" />
         <entry key="app/src/main/res/drawable-v24/ic_delete_white_24.xml" value="0.2405" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.258" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_van.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_van_list.xml" value="0.234375" />
         <entry key="app/src/main/res/layout/card_van.xml" value="0.2203125" />
         <entry key="app/src/main/res/layout/menu_van_add.xml" value="0.2203125" />
         <entry key="app/src/main/res/layout/menu_van_list.xml" value="0.2203125" />
+        <entry key="app/src/main/res/layout/splash_background.xml" value="0.190625" />
+        <entry key="app/src/main/res/menu/menu_van_add.xml" value="0.26927083333333335" />
+        <entry key="app/src/main/res/menu/menu_van_list.xml" value="0.26927083333333335" />
       </map>
     </option>
   </component>
