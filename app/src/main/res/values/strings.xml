@@ -11,6 +11,7 @@
     <string name="button_addImage">Choose Image</string>
     <string name="change_image">Choose New Image</string>
     <string name="select_van_image">Select Image</string>
+    <string name="logo_alt">Only Vans Logo</string>
 
     <string-array name="colors_array">
         <item>Red</item>

@@ -2,6 +2,7 @@ package org.adamgibbons.onlyvans.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.window.SplashScreen
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import org.adamgibbons.onlyvans.databinding.CardVanBinding
