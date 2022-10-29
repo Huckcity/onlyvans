@@ -11,15 +11,14 @@ import java.lang.reflect.Type
 import java.util.*
 import kotlin.collections.ArrayList
 
-const val JSON_FILE = "vans.json"
-val gsonBuilder: Gson? = GsonBuilder()
-    .setPrettyPrinting()
-    .registerTypeAdapter(Uri::class.java, UriParser())
-    .create()
-
-val listType: Type = object : TypeToken<ArrayList<VanModel>>() {}.type
-
 class VanJSONStore(private val context: Context) : VanStore {
+
+    private val gsonBuilder: Gson? = GsonBuilder()
+        .setPrettyPrinting()
+        .registerTypeAdapter(Uri::class.java, UriParser())
+        .create()
+
+    private val listType: Type = object : TypeToken<ArrayList<VanModel>>() {}.type
 
     private var vans = mutableListOf<VanModel>()
 
@@ -34,7 +33,6 @@ class VanJSONStore(private val context: Context) : VanStore {
     }
 
     override fun findAll(): List<VanModel> {
-        logAll()
         return vans
     }
 
@@ -78,6 +76,10 @@ class VanJSONStore(private val context: Context) : VanStore {
 
     private fun logAll() {
         vans.forEach { println(it) }
+    }
+
+    companion object {
+        private const val JSON_FILE = "vans.json"
     }
 
 }

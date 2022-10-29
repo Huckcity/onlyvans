@@ -27,7 +27,6 @@ class VanListActivity : AppCompatActivity(), VanListener {
     private lateinit var vanList: List<VanModel>
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        installSplashScreen()
         super.onCreate(savedInstanceState)
         app = application as MainApp
 
