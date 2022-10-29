@@ -36,7 +36,8 @@
                         android:layout_width="120dp"
                         android:layout_height="match_parent"
                         android:layout_gravity="start"
-                        android:src="@drawable/text_only" />
+                        android:src="@drawable/text_only"
+                        android:contentDescription="@string/van_image" />
                 </LinearLayout>
 
             </androidx.appcompat.widget.Toolbar>
