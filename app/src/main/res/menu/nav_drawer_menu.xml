@@ -10,17 +10,15 @@
         <item
             android:id="@+id/vanFragment"
             android:title="@string/action_add_van" />
+        <item
+            android:id="@+id/nav_gallery"
+            android:title="@string/action_gallery" />
+        <item
+            android:id="@+id/mapsActivity"
+            android:title="@string/action_map" />
+        <item
+            android:id="@+id/logoutActivity"
+            android:title="@string/logout" />
     </group>
-
-    <item android:title="@string/group_community">
-        <menu>
-            <item
-                android:id="@+id/nav_gallery"
-                android:title="@string/action_gallery" />
-            <item
-                android:id="@+id/mapsActivity"
-                android:title="@string/action_map" />
-        </menu>
-    </item>
 
 </menu>
