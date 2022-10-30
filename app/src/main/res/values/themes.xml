@@ -19,4 +19,6 @@
         <item name="postSplashScreenTheme">@style/Theme.OnlyVans</item>
     </style>
 
+    <style name="Theme.OnlyVans.AppBarOverlay" parent="Theme.MaterialComponents.Light.NoActionBar" />
+    <style name="Theme.OnlyVans.PopupOverlay" parent="Theme.MaterialComponents.Light.NoActionBar" />
 </resources>

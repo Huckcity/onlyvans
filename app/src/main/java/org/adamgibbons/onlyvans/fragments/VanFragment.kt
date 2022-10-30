@@ -1,47 +1,64 @@
-package org.adamgibbons.onlyvans.activities
+package org.adamgibbons.onlyvans.fragments
 
+import android.app.Activity.RESULT_CANCELED
+import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
+import android.view.*
 import android.widget.ArrayAdapter
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import org.adamgibbons.onlyvans.MainApp
 import org.adamgibbons.onlyvans.R
-import org.adamgibbons.onlyvans.databinding.ActivityVanBinding
+import org.adamgibbons.onlyvans.databinding.FragmentVanBinding
 import org.adamgibbons.onlyvans.helpers.decodeImage
 import org.adamgibbons.onlyvans.helpers.encodeImage
 import org.adamgibbons.onlyvans.helpers.showImagePicker
 import org.adamgibbons.onlyvans.models.VanModel
 import java.io.InputStream
 import java.util.*
-import kotlin.collections.ArrayList
 
-
-class VanActivity : AppCompatActivity() {
+class VanFragment : Fragment() {
 
     private var van = VanModel()
-    private lateinit var binding: ActivityVanBinding
+    private var _binding: FragmentVanBinding? = null
+    private val binding get() = _binding!!
+
     private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
     private lateinit var app: MainApp
     private var edit = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityVanBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        app = activity?.application as MainApp
+        setHasOptionsMenu(true)
+    }
 
-        binding.toolbarAdd.title = title
-        setSupportActionBar(binding.toolbarAdd)
-        app = application as MainApp
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentVanBinding.inflate(layoutInflater)
+
+        val args = arguments
+        edit = args?.getBoolean("van_edit", false) == true
+
+        if (edit) {
+            if (args != null) {
+                van = args.getString("van_id")?.let { app.vans.findById(it) }!!
+            }
+        }
+        activity?.title = van.title
 
         val colorPickerAdapter = ArrayAdapter.createFromResource(
-            this,
+            requireActivity(),
             R.array.colors_array,
             android.R.layout.simple_spinner_item
         ).also { adapter ->
@@ -50,7 +67,7 @@ class VanActivity : AppCompatActivity() {
         }
 
         val enginePickerAdapter = ArrayAdapter.createFromResource(
-            this,
+            requireActivity(),
             R.array.engines_array,
             android.R.layout.simple_spinner_item
         ).also { adapter ->
@@ -65,18 +82,17 @@ class VanActivity : AppCompatActivity() {
         }
 
         val yearPickerAdapter = ArrayAdapter(
-            this,
+            requireActivity(),
             android.R.layout.simple_spinner_item,
             years
         ).also {
-            adapter ->
+                adapter ->
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_item)
             binding.yearPicker.adapter = adapter
         }
 
-        if (intent.hasExtra("van_edit")) {
-            edit = true
-            van = intent.extras?.getParcelable("van_edit")!!
+        if (edit) {
+            println("WE MADE IT")
             binding.vanTitle.setText(van.title)
             binding.vanDescription.setText(van.description)
             binding.btnAdd.setText(R.string.update_van)
@@ -88,9 +104,18 @@ class VanActivity : AppCompatActivity() {
         }
 
         registerImagePickerCallback()
-    }
 
-    fun addVan(view: View) {
+        binding.btnAdd.setOnClickListener {
+            addVan()
+        }
+
+        binding.chooseImage.setOnClickListener {
+            addVanImage()
+        }
+
+        return binding.root
+    }
+    private fun addVan() {
         van.title = binding.vanTitle.text.toString()
         van.description = binding.vanDescription.text.toString()
         van.color = binding.colorPicker.selectedItem.toString()
@@ -98,34 +123,49 @@ class VanActivity : AppCompatActivity() {
         van.year = binding.yearPicker.selectedItem.toString().toInt()
 
         if (van.title.isEmpty()) {
-            Snackbar.make(view, "You must enter a title", Snackbar.LENGTH_LONG).show()
+            view?.let { Snackbar.make(it, "You must enter a title", Snackbar.LENGTH_LONG).show() }
         } else {
             if (edit) {
                 app.vans.update(van.copy())
             } else {
                 app.vans.create(van.copy())
             }
-            setResult(RESULT_OK)
-            finish()
+            view?.let { Snackbar.make(it, "Van Updated!", Snackbar.LENGTH_LONG).show() }
+
+            val fragmentTransaction: FragmentTransaction? = fragmentManager?.beginTransaction()
+            fragmentTransaction?.remove(this)?.commit()
+            val navController = findNavController()
+            navController.run {
+                popBackStack()
+                navigate(R.id.vanListFragment)
+            }
         }
     }
 
-    fun addVanImage(view: View) {
+    private fun addVanImage() {
         showImagePicker(imageIntentLauncher)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_van_add, menu)
-        return super.onCreateOptionsMenu(menu)
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_van_add, menu)
+        return super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.item_cancel -> {
-                finish()
+                parentFragmentManager.popBackStack()
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    companion object {
+        @JvmStatic
+        fun newInstance() =
+            VanFragment().apply {
+                arguments = Bundle().apply {}
+            }
     }
 
     private fun registerImagePickerCallback() {
@@ -136,7 +176,7 @@ class VanActivity : AppCompatActivity() {
                     RESULT_OK -> {
                         if (result.data != null) {
                             val imageStream: InputStream? =
-                                contentResolver.openInputStream(result.data!!.data!!)
+                                requireActivity().contentResolver.openInputStream(result.data!!.data!!)
                             val selectedImage = BitmapFactory.decodeStream(imageStream)
                             val encodedImage: String? = encodeImage(selectedImage)
 

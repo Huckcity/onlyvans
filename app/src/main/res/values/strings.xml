@@ -19,7 +19,13 @@
     <string name="create_account">Create Account</string>
     <string name="van_image">Van Image</string>
     <string name="user_logged_in">loggedInState</string>
-
+    <string name="nav_header_title">Only Vans</string>
+    <string name="nav_header_subtitle">Because dragons fuck cars.</string>
+    <string name="group_communicate">Communicate</string>
+    <string name="action_share">Share</string>
+    <string name="action_send">Send</string>
+    <string name="action_donate">Donate</string>
+    <string name="action_report">Report</string>
 
     <string-array name="colors_array">
         <item>Red</item>

@@ -13,7 +13,7 @@ interface VanListener {
     fun onVanClick(van: VanModel)
 }
 
-class VanAdapter constructor(private var vans: ArrayList<VanModel>,
+class VanAdapter constructor(private var vans: List<VanModel>,
                              private val listener: VanListener) : RecyclerView.Adapter<VanAdapter.MainHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
@@ -29,7 +29,8 @@ class VanAdapter constructor(private var vans: ArrayList<VanModel>,
     override fun getItemCount(): Int = vans.size
 
     fun removeAt(position: Int) {
-        vans.removeAt(position)
+        val result = vans.toMutableList()
+        result.removeAt(position)
         notifyItemRemoved(position)
     }
 
