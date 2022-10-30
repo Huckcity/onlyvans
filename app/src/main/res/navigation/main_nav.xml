@@ -11,6 +11,9 @@
         <action
             android:id="@+id/action_vanListFragment_to_vanFragment"
             app:destination="@id/vanFragment" />
+        <action
+            android:id="@+id/action_vanListFragment_to_mapsActivity"
+            app:destination="@id/mapsActivity" />
     </fragment>
     <fragment
         android:id="@+id/vanFragment"
@@ -20,4 +23,9 @@
             android:id="@+id/action_vanFragment_to_vanListFragment"
             app:destination="@id/vanListFragment" />
     </fragment>
+    <activity
+        android:id="@+id/mapsActivity"
+        android:name="org.adamgibbons.onlyvans.activities.MapsActivity"
+        android:label="activity_maps"
+        tools:layout="@layout/activity_maps" />
 </navigation>

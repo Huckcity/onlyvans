@@ -16,10 +16,12 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import org.adamgibbons.onlyvans.MainApp
 import org.adamgibbons.onlyvans.R
+import org.adamgibbons.onlyvans.activities.MapsActivity
 import org.adamgibbons.onlyvans.databinding.FragmentVanBinding
 import org.adamgibbons.onlyvans.helpers.decodeImage
 import org.adamgibbons.onlyvans.helpers.encodeImage
 import org.adamgibbons.onlyvans.helpers.showImagePicker
+import org.adamgibbons.onlyvans.models.Location
 import org.adamgibbons.onlyvans.models.VanModel
 import java.io.InputStream
 import java.util.*
@@ -33,6 +35,8 @@ class VanFragment : Fragment() {
     private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
     private lateinit var app: MainApp
     private var edit = false
+    private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
+    var location = Location(52.245696, -7.139102, 15f)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,9 +80,11 @@ class VanFragment : Fragment() {
             binding.colorPicker.setText(van.color, false)
             binding.enginePicker.setText(van.engine.toString(), false)
             binding.yearPicker.setText(van.year.toString(), false)
+            location = van.location
         }
 
         registerImagePickerCallback()
+        registerMapCallback()
 
         binding.btnAdd.setOnClickListener {
             addVan()
@@ -86,6 +92,12 @@ class VanFragment : Fragment() {
 
         binding.chooseImage.setOnClickListener {
             addVanImage()
+        }
+
+        binding.vanLocation.setOnClickListener {
+            val launcherIntent = Intent(context, MapsActivity::class.java)
+                .putExtra("location", location)
+            mapIntentLauncher.launch(launcherIntent)
         }
 
         return binding.root
@@ -112,6 +124,20 @@ class VanFragment : Fragment() {
             item.isVisible = false
     }
 
+    private fun registerMapCallback() {
+        mapIntentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+            { result ->
+                when (result.resultCode) {
+                    RESULT_OK -> {
+                        if (result.data != null) {
+                            location = result.data!!.extras?.getParcelable("location")!!
+                        }
+                    }
+                    RESULT_CANCELED -> { } else -> { }
+                }
+            }
+    }
 
 
     private fun addVan() {
@@ -121,6 +147,7 @@ class VanFragment : Fragment() {
             van.color = binding.colorPicker.text.toString()
             van.engine = binding.enginePicker.text.toString().toDouble()
             van.year = binding.yearPicker.text.toString().toInt()
+            van.location = location
 
             if (van.title.isEmpty() || van.description.isEmpty() || van.color.isEmpty() || van.engine.toString().isEmpty() || van.year.toString().isEmpty()) {
                 view?.let { Snackbar.make(it, "All fields are required!", Snackbar.LENGTH_LONG).show() }

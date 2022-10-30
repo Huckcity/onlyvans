@@ -18,7 +18,7 @@
                 android:id="@+id/nav_gallery"
                 android:title="@string/action_gallery" />
             <item
-                android:id="@+id/nav_map"
+                android:id="@+id/mapsActivity"
                 android:title="@string/action_map" />
         </menu>
     </item>

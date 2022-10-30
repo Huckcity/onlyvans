@@ -11,6 +11,11 @@ data class VanModel(
     var image64: String = "",
     var color: String = "",
     var year: Int = 2022,
-    var engine: Double = 2.0
-
+    var engine: Double = 2.0,
+    var location: Location = Location()
 ) : Parcelable
+
+@Parcelize
+data class Location(var lat: Double = 0.0,
+                    var lng: Double = 0.0,
+                    var zoom: Float = 0f) : Parcelable
