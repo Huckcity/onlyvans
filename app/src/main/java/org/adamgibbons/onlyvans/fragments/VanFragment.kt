@@ -76,7 +76,9 @@ class VanFragment : Fragment() {
             binding.vanDescription.setText(van.description)
             binding.btnAdd.setText(R.string.update_van)
             binding.chooseImage.setText(R.string.change_image)
-            binding.vanImage.setImageBitmap(decodeImage(van.image64))
+            if (van.image64.isNotEmpty()) {
+                binding.vanImage.setImageBitmap(decodeImage(van.image64))
+            }
             binding.colorPicker.setText(van.color, false)
             binding.enginePicker.setText(van.engine.toString(), false)
             binding.yearPicker.setText(van.year.toString(), false)
