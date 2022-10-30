@@ -19,8 +19,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activities.VanActivity" />
-        <activity android:name=".activities.VanListActivity" />
+        <activity android:name=".activities.Home" />
 
     </application>
 

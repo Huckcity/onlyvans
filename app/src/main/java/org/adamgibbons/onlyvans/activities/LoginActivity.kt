@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import org.adamgibbons.onlyvans.MainApp
 import org.adamgibbons.onlyvans.databinding.ActivityLoginBinding
-import org.adamgibbons.onlyvans.helpers.AuthHelpers
 import org.adamgibbons.onlyvans.models.UserModel
 
 class LoginActivity : AppCompatActivity() {
@@ -52,8 +51,9 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun startVanListActivity() {
-        val myIntent = Intent(this, VanListActivity::class.java)
+        val myIntent = Intent(this, Home::class.java)
         startActivity(myIntent)
+        finish()
     }
 
     fun createAccount(view: View) {
