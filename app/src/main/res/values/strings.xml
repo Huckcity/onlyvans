@@ -34,6 +34,7 @@
     <string name="more">More</string>
     <string name="cancel">Cancel</string>
     <string name="add">Add</string>
+    <string name="button_location">Set Location</string>
 
     <string-array name="colors_array">
         <item>Red</item>
@@ -55,5 +56,6 @@
         <item>2.6</item>
         <item>3.0</item>
     </string-array>
+    <string name="title_activity_maps">MapsActivity</string>
 
 </resources>

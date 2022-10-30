@@ -51,6 +51,7 @@ class VanJSONStore(private val context: Context) : VanStore {
             existingVan.color = van.color
             existingVan.engine = van.engine
             existingVan.year = van.year
+            existingVan.location = van.location
         }
         serialize()
     }

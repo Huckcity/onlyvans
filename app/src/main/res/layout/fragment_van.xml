@@ -115,8 +115,15 @@
                 android:scaleType="centerInside"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/currently_selected_image"
-                app:srcCompat="@mipmap/ic_launcher"
                 app:shapeAppearanceOverlay="@style/customRoundedImageView"/>
+
+            <Button
+                android:id="@+id/vanLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:stateListAnimator="@null"
+                android:text="@string/button_location" />
 
             <Button
                 android:id="@+id/btnAdd"
