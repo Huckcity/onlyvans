@@ -1,14 +1,11 @@
 package org.adamgibbons.onlyvans.fragments
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.*
-import androidx.activity.result.ActivityResultLauncher
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
-import androidx.navigation.findNavController
-import androidx.navigation.ui.NavigationUI
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -25,8 +22,8 @@ class VanListFragment : Fragment(), VanListener {
     private lateinit var app: MainApp
     private var _binding: FragmentVanListBinding? = null
     private val binding get() = _binding!!
-    private lateinit var refreshIntentLauncher : ActivityResultLauncher<Intent>
     private lateinit var vanList: List<VanModel>
+    private var shouldRefreshOnResume: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,9 +35,8 @@ class VanListFragment : Fragment(), VanListener {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentVanListBinding.inflate(inflater, container, false)
-        activity?.title = "All Vans"
         binding.recyclerView.layoutManager = LinearLayoutManager(activity)
         vanList = app.vans.findAll()
 
@@ -57,6 +53,23 @@ class VanListFragment : Fragment(), VanListener {
         itemTouchHelper.attachToRecyclerView(binding.recyclerView)
 
         return binding.root
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.van_list_action_bar, menu)
+        return super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.item_add -> {
+                val navController = findNavController()
+                navController.run {
+                    navigate(R.id.vanFragment)
+                }
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onVanClick(van: VanModel) {
@@ -78,20 +91,6 @@ class VanListFragment : Fragment(), VanListener {
         fragmentTransaction.commit()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_van_list, menu)
-        return super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.item_add -> {
-                openAddEditVan(null)
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
     companion object {
         @JvmStatic
         fun newInstance() =
@@ -108,5 +107,6 @@ class VanListFragment : Fragment(), VanListener {
     override fun onResume() {
         super.onResume()
         binding.recyclerView.adapter = VanAdapter(app.vans.findAll(), this)
+        activity?.title = "All Vans"
     }
 }

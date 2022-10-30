@@ -7,7 +7,6 @@
     <fragment
         android:id="@+id/vanListFragment"
         android:name="org.adamgibbons.onlyvans.fragments.VanListFragment"
-        android:label="fragment_van_list"
         tools:layout="@layout/fragment_van_list" >
         <action
             android:id="@+id/action_vanListFragment_to_vanFragment"
@@ -16,7 +15,6 @@
     <fragment
         android:id="@+id/vanFragment"
         android:name="org.adamgibbons.onlyvans.fragments.VanFragment"
-        android:label="fragment_van"
         tools:layout="@layout/fragment_van" >
         <action
             android:id="@+id/action_vanFragment_to_vanListFragment"

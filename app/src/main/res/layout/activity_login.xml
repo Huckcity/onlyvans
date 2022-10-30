@@ -15,30 +15,38 @@
         android:layout_margin="50dp"
         android:gravity="center"/>
 
-    <EditText
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/usernameLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/username"
-        android:layout_below="@id/signin"
         android:hint="@string/hint_username"
+        android:layout_below="@id/signin"
         android:layout_margin="10dp"
-        android:padding="20dp"
-        android:autofillHints="@string/hint_username"
-        android:inputType="text" />
+        android:padding="20dp">
 
-    <EditText
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/username"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/passwordLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/password"
-        android:layout_below="@id/username"
         android:hint="@string/hint_password"
+        android:layout_below="@id/usernameLayout"
         android:layout_margin="10dp"
-        android:padding="20dp"
-        android:inputType="textPassword"
-        android:autofillHints="@string/hint_username" />
+        android:padding="20dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <RelativeLayout
-        android:layout_below="@id/password"
+        android:layout_below="@id/passwordLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"

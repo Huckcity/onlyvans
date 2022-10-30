@@ -21,11 +21,19 @@
     <string name="user_logged_in">loggedInState</string>
     <string name="nav_header_title">Only Vans</string>
     <string name="nav_header_subtitle">Because dragons fuck cars.</string>
-    <string name="group_communicate">Communicate</string>
-    <string name="action_share">Share</string>
-    <string name="action_send">Send</string>
-    <string name="action_donate">Donate</string>
-    <string name="action_report">Report</string>
+    <string name="group_community">Community</string>
+    <string name="action_map">Map</string>
+    <string name="action_gallery">Gallery</string>
+    <string name="action_all_vans">All Vans</string>
+    <string name="action_add_van">Add Van</string>
+    <string name="hint_color">Color</string>
+    <string name="hint_engine">Engine Size</string>
+    <string name="hint_year">Year</string>
+    <string name="edit">Edit</string>
+    <string name="favorite">Favourite</string>
+    <string name="more">More</string>
+    <string name="cancel">Cancel</string>
+    <string name="add">Add</string>
 
     <string-array name="colors_array">
         <item>Red</item>

@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.OnlyVans" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.OnlyVans" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
@@ -10,15 +10,18 @@
         <item name="colorSecondaryVariant">@color/teal_700</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" >?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor" >?attr/colorOutline</item>
         <!-- Customize your theme here. -->
     </style>
+
     <style name="Theme.App.Starting" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">@color/material_dynamic_neutral20</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/artboard_1</item>
         <item name="postSplashScreenTheme">@style/Theme.OnlyVans</item>
     </style>
 
-    <style name="Theme.OnlyVans.AppBarOverlay" parent="Theme.MaterialComponents.Light.NoActionBar" />
-    <style name="Theme.OnlyVans.PopupOverlay" parent="Theme.MaterialComponents.Light.NoActionBar" />
+    <style name="customRoundedImageView" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
+    </style>
 </resources>
