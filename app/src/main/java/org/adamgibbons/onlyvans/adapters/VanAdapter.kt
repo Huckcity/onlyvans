@@ -40,7 +40,9 @@ class VanAdapter constructor(private var vans: List<VanModel>,
         fun bind(van: VanModel, listener: VanListener) {
             binding.vanTitle.text = van.title
             binding.vanDescription.text = van.description
-            binding.imageIcon.setImageBitmap(decodeImage(van.image64))
+            if (van.image64.isNotEmpty()) {
+                binding.imageIcon.setImageBitmap(decodeImage(van.image64))
+            }
             binding.root.setOnClickListener { listener.onVanClick(van) }
         }
     }

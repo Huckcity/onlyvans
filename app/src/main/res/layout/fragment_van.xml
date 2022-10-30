@@ -114,6 +114,7 @@
                 android:layout_height="wrap_content"
                 android:scaleType="centerInside"
                 android:adjustViewBounds="true"
+                app:srcCompat="@mipmap/ic_launcher"
                 android:contentDescription="@string/currently_selected_image"
                 app:shapeAppearanceOverlay="@style/customRoundedImageView"/>
 
