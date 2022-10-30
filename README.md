@@ -13,14 +13,14 @@ Only Vans is an Android application developed in Kotlin, using Material 3 UI ele
 
 ## Screenshots
 
-![Image](screenshots/Screenshot_20221030-230248_OnlyVans.jpg)
-![Image](screenshots/Screenshot_20221030-230315_OnlyVans.jpg)
-![Image](screenshots/Screenshot_20221030-230339_OnlyVans.jpg)
-![Image](screenshots/Screenshot_20221030-230356_OnlyVans.jpg)
-![Image](screenshots/Screenshot_20221030-230400_OnlyVans.jpg)
-![Image](screenshots/Screenshot_20221030-230413_OnlyVans.jpg)
-![Image](screenshots/Screenshot_20221030-230421_OnlyVans.jpg)
-![Image](screenshots/Screenshot_20221030-230430_OnlyVans.jpg)
-![Image](screenshots/Screenshot_20221030-230440_OnlyVans.jpg)
+<img src="screenshots/Screenshot_20221030-230248_OnlyVans.jpg" width="250">
+<img src="screenshots/Screenshot_20221030-230315_OnlyVans.jpg" width="250">
+<img src="screenshots/Screenshot_20221030-230339_OnlyVans.jpg" width="250">
+<img src="screenshots/Screenshot_20221030-230356_OnlyVans.jpg" width="250">
+<img src="screenshots/Screenshot_20221030-230400_OnlyVans.jpg" width="250">
+<img src="screenshots/Screenshot_20221030-230413_OnlyVans.jpg" width="250">
+<img src="screenshots/Screenshot_20221030-230421_OnlyVans.jpg" width="250">
+<img src="screenshots/Screenshot_20221030-230430_OnlyVans.jpg" width="250">
+<img src="screenshots/Screenshot_20221030-230440_OnlyVans.jpg" width="250">
 
 
