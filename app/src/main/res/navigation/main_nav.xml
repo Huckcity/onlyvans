@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav"
+    app:startDestination="@id/vanListFragment">
+    <fragment
+        android:id="@+id/vanListFragment"
+        android:name="org.adamgibbons.onlyvans.fragments.VanListFragment"
+        tools:layout="@layout/fragment_van_list" >
+        <action
+            android:id="@+id/action_vanListFragment_to_vanFragment"
+            app:destination="@id/vanFragment" />
+        <action
+            android:id="@+id/action_vanListFragment_to_mapsActivity"
+            app:destination="@id/mapsActivity" />
+    </fragment>
+    <fragment
+        android:id="@+id/vanFragment"
+        android:name="org.adamgibbons.onlyvans.fragments.VanFragment"
+        tools:layout="@layout/fragment_van" >
+        <action
+            android:id="@+id/action_vanFragment_to_vanListFragment"
+            app:destination="@id/vanListFragment" />
+    </fragment>
+    <activity
+        android:id="@+id/mapsActivity"
+        android:name="org.adamgibbons.onlyvans.activities.MapsActivity"
+        android:label="activity_maps"
+        tools:layout="@layout/activity_maps" />
+</navigation>
